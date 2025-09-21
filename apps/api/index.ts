@@ -1,9 +1,11 @@
 import express from "express";
 import employeeRouter from "./routes/v1/employeeRoutes";
 import storeRouter from "./routes/v1/storeRoutes";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/user", employeeRouter);
 app.use("/store", storeRouter);
