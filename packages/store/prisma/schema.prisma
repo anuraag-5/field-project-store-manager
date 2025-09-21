@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UPI_METHODS {
+  GPAY
+  PHONEPE
+  PAYtm
+}
+
+enum Payment_Methods {
+  UPI
+  CASH
+}
+
+model employees {
+  id                  String                 @id               @default(uuid())
+  email               String                 @unique
+  password            String
+  name                String
+  contact             String
+  address             String
+  isOwner             Boolean
+  stores              stores[]
+}
+
+model customers {
+  id                  String                 @id               @default(uuid())
+  name                String
+  contact             String
+  address             String?
+  sales               sales[]
+}
+
+model products {
+  id                  String                 @id               @default(uuid())
+  brandModel          String
+  name                String
+  price               Int
+  quantity            Int
+  prod_sales          product_sales[]
+}
+
+model sales {
+  id                  String                 @id               @default(uuid())
+  quantity            Json
+  totalAmount         BigInt
+  saleDate            DateTime               @default(now())
+  paymentMethod       Payment_Methods
+  customerId          String
+  customer            customers              @relation(fields: [customerId], references: [id])
+  prod_sales          product_sales[]
+}
+
+model product_sales {
+  id                  String                 @id               @default(uuid())
+  product_id          String
+  sales_id            String
+  product             products               @relation(fields: [product_id], references: [id])
+  sale                sales                  @relation(fields: [sales_id], references: [id])
+}
+
+model stores {
+  id                  String                 @id               @default(uuid())
+  name                String
+  email               String                 @unique
+  address             String
+  gstin               String
+  contact             String
+  isVerified          Boolean                                  @default(false)
+  otp                 Json?
+  owner_id            String
+  Owner               employees               @relation(fields: [owner_id], references: [id])
+}
