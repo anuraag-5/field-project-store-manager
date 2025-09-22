@@ -39,7 +39,7 @@ const Signin = () => {
     if (res.success) {
       toast({ title: `✅ Logged In`, description: "" });
       localStorage.setItem("jwt", res.message);
-      router.replace("/create_store");
+      router.replace("/your_stores");
       return;
     }
 

@@ -9,7 +9,7 @@ import toast from "./Toast";
 
 const LeftNavbar = () => {
   const [ storeId, setStoreId ] = useState("");
-  const { employee, store } = useEmployeeStore();
+  const { employee, store, clearEmployee, clearStore } = useEmployeeStore();
   const router = useRouter();
   const currentPath = usePathname();
   const path = currentPath.includes("dashboard") ? "dashboard" : currentPath.includes("your_stores") ? "your_stores" : currentPath.includes("purchase") ? "purchase" : "inventory" ;
@@ -25,7 +25,9 @@ const LeftNavbar = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem("jwt");
-    router.replace("/signin");
+    clearEmployee();
+    clearStore();
+    router.replace("/user/signin");
   };
 
   useEffect(() => {
@@ -135,7 +137,7 @@ const LeftNavbar = () => {
           </div>
           <Image
             src={`/images/${
-              currentTab === "createStore"
+              currentTab === "your_stores"
                 ? "createStore-icon-black.png"
                 : "createStore-icon-white.png"
             }`}

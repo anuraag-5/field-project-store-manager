@@ -12,8 +12,7 @@ const YourStores = () => {
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     const id = (e.target as HTMLButtonElement).value;
-    if(!employee?.id){
-      console.log("No user")
+    if(!employee?.id) {
       return;
     }
     const store = await getStore(employee.id, id);
@@ -25,14 +24,14 @@ const YourStores = () => {
     const getStores = async () => {
       const token = localStorage.getItem("jwt");
       if (!token) {
-        toast({ title: "You are not signed in", description: "" });
+        toast({ title: "First Sign In", description: "" });
         return router.replace("/user/signin");
       }
 
       const stores = await getUsersStores(token);
       if (!stores.success) {
         toast({
-          title: "You have not addded any store, please add one",
+          title: "Add store first",
           description: "",
         });
         return router.replace("/create_store");

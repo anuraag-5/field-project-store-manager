@@ -18,8 +18,8 @@ function Toast(props: ToastProps) {
   const { title } = props;
 
   return (
-    <div className="h-[60px] w-[270px] bg-[#FBBB3F] flex flex-col justify-center items-center rounded-full">
-      <div className={`text-[#FFF8F1] ` + neueFont.className}>
+    <div className="h-[60px] w-[270px] bg-[#50E5FF] flex flex-col justify-center items-center rounded-full">
+      <div className={`text-[#000000] text-[13px]` + neueFont.className}>
         { title }
       </div>
     </div>

@@ -204,7 +204,7 @@ const CreateStore = () => {
                   neueFont.className + " form-submit-button cursor-pointer"
                 }
               >
-                Sign In
+                Add
               </Button>
             </div>
           </form>
