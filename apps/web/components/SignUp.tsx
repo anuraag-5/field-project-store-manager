@@ -45,7 +45,7 @@ const SignUp = () => {
     if (res.success) {
       toast({ title: `✅ Account created`, description: "" });
       localStorage.setItem("jwt", res.message);
-      router.replace("/store/createStore");
+      router.replace("/user/signin");
       return;
     }
 

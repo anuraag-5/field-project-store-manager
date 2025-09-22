@@ -10,6 +10,6 @@ app.use(cors());
 app.use("/user", employeeRouter);
 app.use("/store", storeRouter);
 
-app.listen(3001, () => {
-    console.log("Server started on port 3000");
+app.listen(process.env.PORT || 3001, () => {
+    console.log(`Server started on port ${process.env.PORT}`);
 })

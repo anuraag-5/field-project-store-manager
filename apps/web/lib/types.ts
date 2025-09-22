@@ -12,3 +12,13 @@ export const formSchemaSignUp = z.object({
     contact: z.string().max(10),
     address: z.string()
 })
+
+export const addStoreSchema = z.object({
+    name: z.string(),
+    email: z.email(),
+    contact: z.string(),
+    city: z.string(),
+    state: z.string(),
+    area: z.string(),
+    gstin: z.string()
+})

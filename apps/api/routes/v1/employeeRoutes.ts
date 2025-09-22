@@ -82,4 +82,44 @@ employeeRouter.post("/signin", async (req, res) => {
     }
 })
 
+employeeRouter.get("/get_user", async (req, res) => {
+    const something = req.headers;
+    const token = something.jwt as string;
+
+    try {
+        const userId = jwt.verify(token, process.env.JWT_SECRET || "") as string;
+        const employee = await prisma.employees.findFirst({
+            where: {
+                id: userId
+            }
+        })
+
+        if(!employee) {
+            return res.status(404).json({
+                id: "",
+                name: "",
+                email: "",
+                isOwner: false,
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            id: employee.id,
+            name: employee.name,
+            email: employee.email,
+            isOwner: employee.isOwner,
+            success: true
+        });
+    } catch (error) {
+        return res.status(500).json({
+            id: "",
+            name: "",
+            email: "",
+            isOwner: false,
+            success: false
+        });
+    }
+})
+
 export default employeeRouter;

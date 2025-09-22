@@ -39,7 +39,7 @@ const Signin = () => {
     if (res.success) {
       toast({ title: `✅ Logged In`, description: "" });
       localStorage.setItem("jwt", res.message);
-      router.replace("/dashboard/projects");
+      router.replace("/createStore");
       return;
     }
 
@@ -49,7 +49,7 @@ const Signin = () => {
 
   return (
     <div className="xl:max-w-[45vw] min-h-screen flex flex-col justify-center px-4 md:px-12">
-      <div className={neueFont.className + " text-[54px] text-[#FBBB3F] mb-15"}>
+      <div className={neueFont.className + " text-[54px] text-[#1976D2] mb-15"}>
         Sign In
       </div>
       <Form {...form}>

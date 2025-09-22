@@ -71,6 +71,8 @@ model stores {
   name                String
   email               String                 @unique
   address             String
+  city                String
+  state               String
   gstin               String
   contact             String
   isVerified          Boolean                                  @default(false)

@@ -31,10 +31,10 @@ export const signUpUser = async (email: string, password: string, name: string, 
 
 export const signInUser = async (email: string, password: string) => {
     try {
-        const res = await axios.post("http://localhost:3001/user/signup", {
+        const res = await axios.post("http://localhost:3001/user/signin", {
             email,
             password
-        })
+        });
 
         if(res.status !== 200) {
             return {
@@ -49,6 +49,6 @@ export const signInUser = async (email: string, password: string) => {
         return {
             message: "Internal server error",
             success: false
-        }
+        };
     }
 }
