@@ -2,26 +2,40 @@
 
 import Image from "next/image";
 import { popppinFont } from "app/fonts/fonts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEmployeeStore } from "lib/employeeStore";
+import toast from "./Toast";
 
 const LeftNavbar = () => {
-  const { employee } = useEmployeeStore();
+  const [ storeId, setStoreId ] = useState("");
+  const { employee, store } = useEmployeeStore();
   const router = useRouter();
   const currentPath = usePathname();
-  const path = currentPath.includes("dashboard") ? "dashboard" : currentPath.includes("createStore") ? "createStore" : currentPath.includes("purchase") ? "purchase" : "inventory" ;
+  const path = currentPath.includes("dashboard") ? "dashboard" : currentPath.includes("your_stores") ? "your_stores" : currentPath.includes("purchase") ? "purchase" : "inventory" ;
   const [currentTab, setCurrentTab] = useState(path);
 
   const handleTabChange = async (tab: string) => {
     setCurrentTab(tab);
-    router.push(`/store/${tab}`);
+    if(tab === "your_stores")
+    router.push(`/store/your_stores`);
+    else
+    router.push(`/store/${tab}/${storeId || "unknown"}`);
   };
 
   const handleLogout = async () => {
     localStorage.removeItem("jwt");
     router.replace("/signin");
   };
+
+  useEffect(() => {
+    const storeId = localStorage.getItem("storeId");
+    if(!storeId) {
+      toast({ title: "First select a store", description: "" });
+      return router.replace("/your_stores");
+    }
+    setStoreId(storeId)
+  }, [router])
 
   return (
     <div className="hidden md:flex flex-col min-h-screen bg-[#212627] md:rounded-br-2xl md:rounded-tr-2xl mr-1.5 text-white px-2 py-6">
@@ -110,14 +124,14 @@ const LeftNavbar = () => {
         </div>
         <div
           className={
-            currentTab === "createStore"
+            currentTab === "your_stores"
               ? "flex justify-between items-center bg-[#50E5FF] rounded-full py-3 px-4 mb-3 cursor-pointer text-black"
               : "flex justify-between items-center rounded-full py-3 px-4 mb-3 cursor-pointer text-white"
           }
-          onClick={() => handleTabChange("createStore")}
+          onClick={() => handleTabChange("your_stores")}
         >
           <div className="text-[14px] xl:text-[16px] font-semibold">
-            Add Store
+           Your Stores
           </div>
           <Image
             src={`/images/${
@@ -131,10 +145,10 @@ const LeftNavbar = () => {
           />
         </div>
       </div>
-      <div className="text-[11px]">
+      <div className="text-[11px] mb-20">
         <div>{employee?.name || ""}</div>
         <div>{employee?.email || ""}</div>
-        <div>{employee?.isOwner ? "Owner": "Employee"}</div>
+        <div>{store?.name ? store.name: "Unknown"}</div>
         <div className="cursor-pointer" onClick={handleLogout}>
           Signout
         </div>
