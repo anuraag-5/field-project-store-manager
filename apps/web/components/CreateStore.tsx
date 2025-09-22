@@ -52,7 +52,7 @@ const CreateStore = () => {
 
     if (res.success) {
       toast({ title: "✅ Store added", description: "" });
-      router.replace(`/store/dashboard/${res.message}`);
+      router.replace(`/your_stores`);
       return;
     }
 

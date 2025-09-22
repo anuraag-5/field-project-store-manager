@@ -1,7 +1,6 @@
 import axios from "axios";
-import { success } from "zod";
 
-interface Store {
+export interface Store {
   id: string;
   name: string;
   email: string;
@@ -54,7 +53,7 @@ export const addStore = async (
 };
 
 export const getUsersStores = async (token: string) => {
-  "use server";
+  
   try {
     const res = await fetch("http://localhost:3001/store/get_all_stores", {
       method: "Get",
@@ -77,7 +76,7 @@ export const getUsersStores = async (token: string) => {
         stores: [],
       };
     }
-    
+
     return {
       success: true,
       stores: stores.message,
