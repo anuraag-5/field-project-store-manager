@@ -115,4 +115,49 @@ storeRouter.get("/get_all_stores", async (req, res) => {
         })
     }
 })
+
+storeRouter.get("/total_customers", async (req, res) => {
+    const storeId = req.headers.storeId as string;
+    try {
+        const total_customers = await prisma.customer_stores.count({
+            where: {
+                store_id: storeId
+            }
+        })
+
+        return res.status(200).json({
+            success: true,
+            count: total_customers
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            count: 0
+        });
+    }
+})
+
+storeRouter.get("/todays_sales", async (req, res) => {
+    const storeId = req.headers.storeId as string;
+    try {
+        const totalTodaysSales = await prisma.product_sales.findMany({
+            where: {
+                store_id: storeId
+            }
+        })
+         
+        let sales = 0;
+        totalTodaysSales.forEach((s) => { sales = sales + s.totalPrice})
+
+        return res.status(200).json({
+            success: true,
+            count: sales
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            count: 0
+        });
+    }
+})
 export default storeRouter;

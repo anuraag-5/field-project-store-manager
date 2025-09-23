@@ -17,6 +17,7 @@ const YourStores = () => {
     }
     const store = await getStore(employee.id, id);
     setStore(store);
+    localStorage.setItem("storeId", id);
     return router.push(`/store/dashboard/${id}`);
   };
 
@@ -50,7 +51,8 @@ const YourStores = () => {
   
         const employee = await getEmployee(token);
         if (!employee.success) {
-          return null;
+          toast({ title: "No user found", description: "" })
+          return router.prefetch("/user/signin");
         }
         setEmployee(employee);
       };

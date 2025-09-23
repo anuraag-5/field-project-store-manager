@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { neueFont } from "app/fonts/fonts";
 import { signUpUser } from "lib/auths";
+import Link from "next/link";
 
 const SignUp = () => {
   const router = useRouter();
@@ -156,7 +157,7 @@ const SignUp = () => {
               </FormItem>
             )}
           />
-          <div className="w-full max-w-[700px] flex justify-center mt-15">
+          <div className="w-full max-w-[700px] flex flex-col items-center mt-15">
             <Button
               type="submit"
               className={
@@ -165,6 +166,9 @@ const SignUp = () => {
             >
               Sign Up
             </Button>
+            <div className="text-white">
+              Existing user ? <Link href="/user/signin" className="text-[#1976D2]"> Sign In </Link>
+            </div>
           </div>
         </form>
       </Form>

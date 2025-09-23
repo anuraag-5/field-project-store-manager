@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchemaSignIn } from "lib/types";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   Form,
   FormControl,
@@ -93,15 +94,18 @@ const Signin = () => {
               </FormItem>
             )}
           />
-          <div className="w-full max-w-[700px] flex justify-center mt-15">
+          <div className="w-full max-w-[700px] flex flex-col items-center mt-15">
             <Button
               type="submit"
               className={
-                neueFont.className + " form-submit-button cursor-pointer"
+                neueFont.className + " form-submit-button cursor-pointer max-w-[300px] mb-5"
               }
             >
               Sign In
             </Button>
+            <div className="text-white">
+              New user ? <Link href="/user/signup" className="text-[#1976D2]"> Sign Up </Link>
+            </div>
           </div>
         </form>
       </Form>

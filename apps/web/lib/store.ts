@@ -88,3 +88,57 @@ export const getUsersStores = async (token: string) => {
     };
   }
 };
+
+export const getTotalCustomers = async (storeId: string) => {
+  try {
+    const res = await axios.get("http://localhost:3001/store/total_customers", {
+      headers: {
+        storeId
+      }
+    })
+    if(res.status !== 200) {
+      return {
+        success: false,
+        count: 0
+      }
+    }
+
+    const data = await res.data as { success: boolean, count: number }
+    return {
+      success: true,
+      count: data.count
+    }
+  } catch (_) {
+    return {
+      success: false,
+      count: 0
+    }
+  }
+}
+
+export const getTodaysSales = async (storeId: string) => {
+  try {
+    const res = await axios.get("http://localhost:3001/store/todays_sales", {
+      headers: {
+        storeId
+      }
+    })
+    if(res.status !== 200) {
+      return {
+        success: false,
+        count: 0
+      }
+    }
+
+    const data = await res.data as { success: boolean, count: number }
+    return {
+      success: true,
+      count: data.count
+    }
+  } catch (_) {
+    return {
+      success: false,
+      count: 0
+    }
+  }
+}

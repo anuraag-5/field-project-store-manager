@@ -36,6 +36,7 @@ model customers {
   contact             String
   address             String?
   sales               sales[]
+  stores              customer_stores[]
 }
 
 model products {
@@ -62,6 +63,9 @@ model product_sales {
   id                  String                 @id               @default(uuid())
   product_id          String
   sales_id            String
+  store_id            String
+  totalPrice          Int
+  store               stores                 @relation(fields: [store_id], references: [id])
   product             products               @relation(fields: [product_id], references: [id])
   sale                sales                  @relation(fields: [sales_id], references: [id])
 }
@@ -78,5 +82,15 @@ model stores {
   isVerified          Boolean                                  @default(false)
   otp                 Json?
   owner_id            String
+  customers           customer_stores[]
+  prod_sales          product_sales[]
   Owner               employees               @relation(fields: [owner_id], references: [id])
+}
+
+model customer_stores {
+  id                  String                 @id               @default(uuid())
+  customer_id         String
+  store_id            String
+  customer            customers               @relation(fields: [customer_id], references: [id])
+  store               stores                  @relation(fields: [store_id], references: [id])
 }
