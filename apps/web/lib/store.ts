@@ -149,11 +149,8 @@ export const addProduct = async (name: string, brand: string, price: number, qua
       name,
       brand,
       price,
-      quantity
-    }, {
-      headers: {
-        storeId
-      }
+      quantity,
+      storeId
     })
 
     if(res.status !== 200){
@@ -165,6 +162,36 @@ export const addProduct = async (name: string, brand: string, price: number, qua
     return {
       success: true,
       message: "Product added"
+    }
+  } catch (_) {
+    return {
+      success: false,
+      message: "Some error occured"
+    }
+  }
+}
+
+export const customerPurchase = async (customerName: string, contact: string, address: string, productBrandName: string, productName: string, quantity: number, storeId: string) => {
+  try {
+    const res = await axios.post("http://localhost:3001/store/customer_purchase", {
+      customerName,
+      contact,
+      address,
+      productBrandName,
+      productName,
+      quantity,
+      storeId
+    })
+
+    if(res.status !== 200){
+      return {
+        success: false,
+        message: "Some error occured"
+      }
+    }
+    return {
+      success: true,
+      message: "Sale done"
     }
   } catch (_) {
     return {

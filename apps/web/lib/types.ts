@@ -29,3 +29,12 @@ export const addProductSchema = z.object({
     price: z.string(),
     quantity: z.string()
 })
+
+export const purchaseSchema = z.object({
+    customerName: z.string(),
+    contact: z.string(),
+    address: z.string(),
+    quantity: z.string(),
+    productName: z.string(),
+    productBrandName: z.string()
+})

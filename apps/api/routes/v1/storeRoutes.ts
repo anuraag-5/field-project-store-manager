@@ -119,7 +119,7 @@ storeRouter.get("/get_all_stores", async (req, res) => {
 storeRouter.get("/total_customers", async (req, res) => {
     const storeId = req.headers.storeId as string;
     try {
-        const total_customers = await prisma.customer_stores.count({
+        const total_customers = await prisma.customers.count({
             where: {
                 store_id: storeId
             }
@@ -161,13 +161,13 @@ storeRouter.get("/todays_sales", async (req, res) => {
     }
 })
 
-storeRouter.post("/add_product", async (req, res) => {
-    const storeId = req.headers.storeId as string;
+storeRouter.post("/add_product", async (req, res) => {    
     const data = req.body;
     const name = data.name;
     const brandModel = data.brand;
     const price = data.price;
     const quantity = data.quantity;
+    const storeId = data.storeId;
 
     try {
         await prisma.products.create({
@@ -175,7 +175,10 @@ storeRouter.post("/add_product", async (req, res) => {
                 name,
                 brandModel,
                 price,
-                quantity
+                quantity,
+                store: {
+                    connect: { id: storeId }
+                }
             }
         });
 
@@ -184,6 +187,75 @@ storeRouter.post("/add_product", async (req, res) => {
             message: "Product created"
         });
     } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+})
+
+storeRouter.post("/customer_purchase", async (req, res) => {
+    const data = req.body;
+    const customerName = data.customerName;
+    const contact = data.contact;
+    const address = data.address;
+    const productBrandName = data.productBrandName;
+    const productName = data.productName;
+    const quantity = data.quantity;
+    const storeId = data.storeId;
+
+    try {
+
+        const customer = await prisma.customers.create({
+            data: {
+                name: customerName,
+                contact,
+                address,
+                store_id: storeId
+            }
+        });
+
+        const product = await prisma.products.findFirst({
+            where: {
+                name: productName,
+                brandModel: productBrandName,
+                store_id: storeId
+            }
+        })
+
+        if(!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+
+        const sales = await prisma.sales.create({
+            data: {
+                customerId: customer.id,
+                quantity,
+                totalAmount: quantity * product.price,
+                saleDate: new Date(),
+                paymentMethod: 'UPI'
+            }
+        })
+
+        await prisma.product_sales.create({
+            data: {
+                product_id: product.id,
+                sales_id: sales.id,
+                store_id: storeId,
+                totalPrice: quantity * product.price
+            }
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: "Sale Done"
+        });
+    } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             message: "Internal server error"

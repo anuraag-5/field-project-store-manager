@@ -4,7 +4,7 @@ import z from "zod";
 import toast from "./Toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { addProductSchema } from "lib/types";
+import { purchaseSchema } from "lib/types";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,27 +16,31 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { neueFont } from "app/fonts/fonts";
-import { addProduct } from "lib/store";
+import { customerPurchase } from "lib/store";
 import { useEmployeeStore } from "lib/employeeStore";
 
-const AddInventory = () => {
+const CustomerPurchase = () => {
   const { store } = useEmployeeStore();
-  const form = useForm<z.infer<typeof addProductSchema>>({
-    resolver: zodResolver(addProductSchema),
+  const form = useForm<z.infer<typeof purchaseSchema>>({
+    resolver: zodResolver(purchaseSchema),
     defaultValues: {
-      name: "",
-      brand: "",
+      customerName: "",
+      productBrandName: "",
+      productName: "",
       quantity: "",
-      price: ""
+      address: "",
+      contact: ""
     },
   });
-  async function onSubmit(values: z.infer<typeof addProductSchema>) {
-    const name = values.name;
-    const brand = values.brand;
-    const price = Number(values.price);
+  async function onSubmit(values: z.infer<typeof purchaseSchema>) {
+    const customerName = values.customerName;
+    const productBrandName = values.productBrandName;
+    const productName= values.productName;
+    const contact = values.contact;
+    const address = values.address;
     const quantity = Number(values.quantity);
-    console.log(store?.id);
-    const res = await addProduct(name, brand, price, quantity, store?.id!);
+
+    const res = await customerPurchase(customerName, contact, address, productBrandName, productName, quantity, store?.id!);
 
     if (res.success) {
       toast({ title: "✅ " + res.message, description: "" });
@@ -49,7 +53,7 @@ const AddInventory = () => {
   return (
     <div className="rounded-2xl pl-10">
       <div className="text-[26px] pt-6 pb-4 mb-8 inline-block bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-        Add Products
+        Customer and Product
       </div>
       <div>
         <Form {...form}>
@@ -58,14 +62,14 @@ const AddInventory = () => {
               <div className="flex flex-col gap-10">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="customerName"
                   render={({ field }) => (
                     <FormItem>
                       <div className="bg-[#A5ABAD] flex h-[75px] flex-col justify-center border border-gray-300 px-6 rounded-full w-full min-w-[400px] max-w-[700px]">
-                        <FormLabel className="shad-form-label">Name</FormLabel>
+                        <FormLabel className="shad-form-label">Customer Name</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="xyz"
+                            placeholder="abc"
                             {...field}
                             className="shad-no-focus shad-input"
                           />
@@ -77,14 +81,33 @@ const AddInventory = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="brand"
+                  name="contact"
                   render={({ field }) => (
                     <FormItem>
                       <div className="bg-[#A5ABAD] flex h-[75px] flex-col justify-center border border-gray-300 px-6 rounded-full w-full min-w-[400px] max-w-[700px]">
-                        <FormLabel className="shad-form-label">Brand</FormLabel>
+                        <FormLabel className="shad-form-label">Contact</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="cello"
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#A5ABAD] flex h-[75px] flex-col justify-center border border-gray-300 px-6 rounded-full w-full min-w-[400px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
                             {...field}
                             className="shad-no-focus shad-input"
                           />
@@ -98,14 +121,33 @@ const AddInventory = () => {
               <div className="flex flex-col gap-10">
                 <FormField
                   control={form.control}
-                  name="price"
+                  name="productBrandName"
                   render={({ field }) => (
                     <FormItem>
                       <div className="bg-[#A5ABAD] flex h-[75px] flex-col justify-center border border-gray-300 px-6 rounded-full w-full min-w-[400px] max-w-[700px]">
-                        <FormLabel className="shad-form-label">Price</FormLabel>
+                        <FormLabel className="shad-form-label">Product Brand</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="100"
+                            placeholder="cello"
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="productName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#A5ABAD] flex h-[75px] flex-col justify-center border border-gray-300 px-6 rounded-full w-full min-w-[400px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">Product Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="pen"
                             {...field}
                             className="shad-no-focus shad-input"
                           />
@@ -147,14 +189,14 @@ const AddInventory = () => {
                   " bg-[#1976D2] h-[52px] rounded-full leading-[20px] text-[20px] hover:bg-[#dedecd] text-white px-20 cursor-pointer max-w-[300px] mb-5"
                 }
               >
-                Add
+                Sale
               </Button>
             </div>
           </form>
         </Form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddInventory;
+export default CustomerPurchase;
