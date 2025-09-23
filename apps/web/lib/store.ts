@@ -142,3 +142,34 @@ export const getTodaysSales = async (storeId: string) => {
     }
   }
 }
+
+export const addProduct = async (name: string, brand: string, price: number, quantity: number, storeId: string) => {
+  try {
+    const res = await axios.post("http://localhost:3001/store/add_product", {
+      name,
+      brand,
+      price,
+      quantity
+    }, {
+      headers: {
+        storeId
+      }
+    })
+
+    if(res.status !== 200){
+      return {
+        success: false,
+        message: "Some error occured"
+      }
+    }
+    return {
+      success: true,
+      message: "Product added"
+    }
+  } catch (_) {
+    return {
+      success: false,
+      message: "Some error occured"
+    }
+  }
+}

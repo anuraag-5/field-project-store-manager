@@ -22,3 +22,10 @@ export const addStoreSchema = z.object({
     area: z.string(),
     gstin: z.string()
 })
+
+export const addProductSchema = z.object({
+    name: z.string(),
+    brand: z.string(),
+    price: z.string(),
+    quantity: z.string()
+})

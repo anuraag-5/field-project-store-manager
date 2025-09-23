@@ -18,7 +18,9 @@ const QuickOverview = () => {
   });
   return (
     <div className='rounded-2xl pl-10'>
-        <div className='text-[26px] pt-6 pb-4'>Quick Overview</div>
+        <div className="text-[26px] pt-6 pb-4 inline-block bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+          Quick Overview
+        </div>
         <div className='flex gap-5'>
           <div className='bg-[#3D4445] w-fit py-5 px-20 rounded-3xl flex flex-col items-center justify-center font-semibold gap-2'>
             <Image 

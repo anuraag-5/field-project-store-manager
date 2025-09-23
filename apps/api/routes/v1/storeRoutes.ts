@@ -160,4 +160,35 @@ storeRouter.get("/todays_sales", async (req, res) => {
         });
     }
 })
+
+storeRouter.post("/add_product", async (req, res) => {
+    const storeId = req.headers.storeId as string;
+    const data = req.body;
+    const name = data.name;
+    const brandModel = data.brand;
+    const price = data.price;
+    const quantity = data.quantity;
+
+    try {
+        await prisma.products.create({
+            data: {
+                name,
+                brandModel,
+                price,
+                quantity
+            }
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Product created"
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+})
+
 export default storeRouter;
