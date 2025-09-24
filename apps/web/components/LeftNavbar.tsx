@@ -18,7 +18,7 @@ const LeftNavbar = () => {
   const handleTabChange = async (tab: string) => {
     setCurrentTab(tab);
     if(tab === "your_stores")
-    router.push(`/store/your_stores`);
+    router.push(`/your_stores`);
     else
     router.push(`/store/${tab}/${storeId || "unknown"}`);
   };

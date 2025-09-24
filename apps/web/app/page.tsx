@@ -1,5 +1,7 @@
 "use client";
 
+import Hero from "components/Hero";
+import Navbar from "components/Navbar";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -13,8 +15,9 @@ const Page = () => {
     return router.push("/your_stores");
   }
   return (
-    <div className="min-h-screen min-w-screen flex justify-center items-center">
-      <button onClick={handleClick} className="p-10 bg-blue-500 rounded-full cursor-pointer"> Get started </button>
+    <div className="min-h-screen min-w-screen bg-[linear-gradient(to_bottom,_#2D8594_0%25,_#1F5A64_9%25,_#133137_22%25,_#0B1E21_47%25,_#0C2529_100%25)] p-14">
+      <Navbar />
+      <Hero />
     </div>
   );
 }
