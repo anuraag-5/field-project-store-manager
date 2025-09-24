@@ -29,7 +29,7 @@ const BrandLogos = () => {
 
   }, { dependencies: [] })
   return (
-    <div className="flex">
+    <div className="flex mt-5">
       <div className="flex gap-74 p-10 min-w-screen" ref={brandsRef}>
         <Image 
         src={"/images/airbnb.png"}
@@ -70,13 +70,13 @@ const BrandLogos = () => {
         height={120}
         />
         <Image 
-        src={"/images/notebook-tp.png"}
+        src={"/images/notebook-tp.svg"}
         alt=""
         width={100}
         height={100}
         />
         <Image 
-        src={"/images/fountain-pen-tp.png"}
+        src={"/images/fountain-pen-tp.svg"}
         alt=""
         width={100}
         height={100}

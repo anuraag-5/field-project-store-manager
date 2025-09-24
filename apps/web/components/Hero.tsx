@@ -10,7 +10,7 @@ import { useRef } from "react";
 import BrandLogos from "./BrandLogos";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-const Hero = () => {
+const Hero = ({ handleClick }: { handleClick: () => void}) => {
   const blinkingRef = useRef<HTMLDivElement | null>(null);
   useGSAP(() => {
     const lenis = new Lenis();
@@ -30,7 +30,7 @@ const Hero = () => {
     }, {
         opacity: 0.6,
         duration: 1.6,
-        scale: 1.7,
+        scale: 1.9,
         yoyo: true,
         repeat: -1
     })
@@ -57,7 +57,7 @@ const Hero = () => {
                   <div>maintenance of software</div>
                 </div>
                 <div className="text-[22px] font-bold py-4 px-8 rounded-full bg-gradient-to-r from-[#4EE3FD] to-[#2F8797] w-fit">
-                    <div className="bg-gradient-to-r from-[#1B1B1B] to-[#3B3939] bg-clip-text text-transparent">Get Started</div>
+                    <div className="bg-gradient-to-r from-[#1B1B1B] to-[#3B3939] bg-clip-text text-transparent cursor-pointer" onClick={handleClick}>Get Started</div>
                 </div>
             </div>
             <div className="relative flex-1">

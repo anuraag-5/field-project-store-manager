@@ -91,10 +91,8 @@ export const getUsersStores = async (token: string) => {
 
 export const getTotalCustomers = async (storeId: string) => {
   try {
-    const res = await axios.get("http://localhost:3001/store/total_customers", {
-      headers: {
-        storeId
-      }
+    const res = await axios.post("http://localhost:3001/store/total_customers", {
+      storeId
     })
     if(res.status !== 200) {
       return {
@@ -118,10 +116,8 @@ export const getTotalCustomers = async (storeId: string) => {
 
 export const getTodaysSales = async (storeId: string) => {
   try {
-    const res = await axios.get("http://localhost:3001/store/todays_sales", {
-      headers: {
-        storeId
-      }
+    const res = await axios.post("http://localhost:3001/store/todays_sales", {
+      storeId
     })
     if(res.status !== 200) {
       return {

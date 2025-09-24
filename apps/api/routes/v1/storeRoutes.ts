@@ -116,8 +116,9 @@ storeRouter.get("/get_all_stores", async (req, res) => {
     }
 })
 
-storeRouter.get("/total_customers", async (req, res) => {
-    const storeId = req.headers.storeId as string;
+storeRouter.post("/total_customers", async (req, res) => {
+    const data = req.body;
+    const storeId = data.storeId as string;
     try {
         const total_customers = await prisma.customers.count({
             where: {
@@ -137,8 +138,9 @@ storeRouter.get("/total_customers", async (req, res) => {
     }
 })
 
-storeRouter.get("/todays_sales", async (req, res) => {
-    const storeId = req.headers.storeId as string;
+storeRouter.post("/todays_sales", async (req, res) => {
+    const data = req.body;
+    const storeId = data.storeId as string;
     try {
         const totalTodaysSales = await prisma.product_sales.findMany({
             where: {
