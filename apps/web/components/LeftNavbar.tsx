@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEmployeeStore } from "lib/employeeStore";
 import toast from "./Toast";
+import { getRandomColor } from "lib/helper";
 
 const LeftNavbar = () => {
+  const [ color, setColor ] = useState("");
   const [ storeId, setStoreId ] = useState("");
   const { employee, store, clearEmployee, clearStore } = useEmployeeStore();
   const router = useRouter();
@@ -32,6 +34,8 @@ const LeftNavbar = () => {
   };
 
   useEffect(() => {
+    const color = getRandomColor();
+    setColor(color!);
     const storeId = localStorage.getItem("storeId");
     if(!storeId) {
       toast({ title: "First select a store", description: "" });
@@ -148,12 +152,22 @@ const LeftNavbar = () => {
           />
         </div>
       </div>
-      <div className="text-[11px] mb-20">
-        <div>{employee?.name || ""}</div>
-        <div>{employee?.email || ""}</div>
-        <div>{store?.name ? store.name: "Unknown"}</div>
-        <div className="cursor-pointer" onClick={handleLogout}>
-          Signout
+      <div className="text-[11px] mb-5">
+        <div className="flex gap-2 justify-center items-center">
+          <div className={`w-[50px] h-[50px] rounded-full ` + color }></div>
+          <div className="text-white">
+            <div className="text-lg">{ employee?.name }</div>
+            <div className="text-gray-300">{ employee?.email }</div>
+          </div>
+        </div>
+        <div className="flex gap-5 p-2 bg-[#1976D2] rounded-full justify-center items-center cursor-pointer mt-5" onClick={handleLogout}>
+          <Image 
+          src="/images/logout-black.svg"
+          alt=""
+          width={20}
+          height={20}
+          />
+          <div className="text-lg">SignOut</div>
         </div>
       </div>
     </div>
