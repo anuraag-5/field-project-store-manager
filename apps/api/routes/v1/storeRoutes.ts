@@ -172,17 +172,37 @@ storeRouter.post("/add_product", async (req, res) => {
     const storeId = data.storeId;
 
     try {
-        await prisma.products.create({
-            data: {
+        const existingProduct = await prisma.products.findFirst({
+            where: {
                 name,
-                brandModel,
-                price,
-                quantity,
-                store: {
-                    connect: { id: storeId }
-                }
+                store_id: storeId
             }
-        });
+        })
+
+        if(existingProduct){
+            await prisma.products.update({
+                where: {
+                    id: existingProduct.id,
+                    store_id: storeId
+                },
+                data: {
+                    quantity: existingProduct.quantity + quantity
+                }
+            })
+        } else {
+            await prisma.products.create({
+                data: {
+                    name,
+                    brandModel,
+                    price,
+                    quantity,
+                    store: {
+                        connect: { id: storeId }
+                    }
+                }
+            });
+        }
+        
 
         return res.status(200).json({
             success: true,
@@ -208,16 +228,6 @@ storeRouter.post("/customer_purchase", async (req, res) => {
     const storeId = data.storeId;
 
     try {
-
-        const customer = await prisma.customers.create({
-            data: {
-                name: customerName,
-                contact,
-                address,
-                store_id: storeId
-            }
-        });
-
         const product = await prisma.products.findFirst({
             where: {
                 name: productName,
@@ -232,6 +242,43 @@ storeRouter.post("/customer_purchase", async (req, res) => {
                 message: "Product not found"
             });
         }
+
+        if(product.quantity < quantity) {
+            return res.status(404).json({
+                success: false,
+                message: "Not enough stock"
+            });
+        }
+
+        const existingCustomer = await prisma.customers.findFirst({
+            where: {
+                contact,
+                store_id: storeId
+            }
+        })
+
+        let customer;
+        if(!existingCustomer){
+            customer = await prisma.customers.create({
+                data: {
+                    name: customerName,
+                    contact,
+                    address,
+                    store_id: storeId
+                }
+            });
+        } else {
+            customer = existingCustomer;
+        }       
+
+        await prisma.products.update({
+            where: {
+                id: product.id
+            },
+            data: {
+                quantity: product.quantity - quantity
+            }
+        })
 
         const sales = await prisma.sales.create({
             data: {
@@ -257,7 +304,6 @@ storeRouter.post("/customer_purchase", async (req, res) => {
             message: "Sale Done"
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: "Internal server error"

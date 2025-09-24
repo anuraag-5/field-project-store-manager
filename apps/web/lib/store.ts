@@ -192,7 +192,7 @@ export const customerPurchase = async (customerName: string, contact: string, ad
   } catch (_) {
     return {
       success: false,
-      message: "Some error occured"
+      message: "Not enough stock"
     }
   }
 }

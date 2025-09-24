@@ -25,6 +25,7 @@ const LeftNavbar = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("storeId");
     clearEmployee();
     clearStore();
     router.replace("/user/signin");
