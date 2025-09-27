@@ -1,5 +1,6 @@
 "use client";
 
+import Products from "components/Products";
 import QuickOverview from "components/QuickOverview";
 import { useEmployeeStore } from "lib/employeeStore";
 
@@ -20,6 +21,7 @@ const Dashboard = ({
         </div>
         <div className="flex-1 border-2 border-[#50E5FF] relative right-[-2] rounded-tl-2xl rounded-bl-2xl my-5">
           <QuickOverview />
+          <Products />
         </div>
     </div>
   )

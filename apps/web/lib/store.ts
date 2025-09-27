@@ -11,6 +11,15 @@ export interface Store {
   owner_id: string;
 }
 
+export interface Product {  
+  id: string;
+  name: string;
+  store_id: string;
+  brandModel: string;
+  price: number;
+  quantity: number;
+}
+
 export const addStore = async (
   name: string,
   email: string,
@@ -193,6 +202,32 @@ export const customerPurchase = async (customerName: string, contact: string, ad
     return {
       success: false,
       message: "Not enough stock"
+    }
+  }
+}
+
+export const getAllProducts = async (storeId: string) => {
+  try {
+    const res = await axios.post("http://localhost:3001/store/get_all_products", {
+      storeId
+    })
+
+    if(res.status !== 200) {
+      return {
+        success: false,
+        products: []
+      }
+    }
+
+    const data = await res.data as { success: boolean, products: Product[] };
+    return {
+      success: true,
+      products: data.products
+    }
+  } catch (_) {
+    return {
+      success: false,
+      products: []
     }
   }
 }

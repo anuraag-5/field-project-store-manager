@@ -311,4 +311,34 @@ storeRouter.post("/customer_purchase", async (req, res) => {
     }
 })
 
+storeRouter.post("/get_all_products", async (req, res) => {
+    const data = req.body;
+    const store_id = data.storeId;
+
+    try {
+        const products = await prisma.products.findMany({
+            where: {
+                store_id
+            }
+        })
+
+        if(products.length ===  0){
+            return res.status(404).json({
+                success: false,
+                products: []
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            products
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            products: []
+        })
+    }
+})
+
 export default storeRouter;
