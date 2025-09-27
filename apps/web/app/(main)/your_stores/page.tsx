@@ -20,7 +20,7 @@ const YourStores = () => {
     const store = await getStore(employee.id, id);
     setStore(store);
     localStorage.setItem("storeId", id);
-    return router.push(`/store/dashboard/${id}`);
+    return router.push(`/store/dashboard`);
   };
 
   useEffect(() => {

@@ -4,11 +4,7 @@ import Products from "components/Products";
 import QuickOverview from "components/QuickOverview";
 import { useEmployeeStore } from "lib/employeeStore";
 
-const Dashboard = ({
-    params,
-  }: {
-    params: { storeId: string }
-  }) => {
+const Dashboard = () => {
   const { store } = useEmployeeStore();
   return (
     <div className="pl-10 pt-10 flex flex-col min-h-full relative overflow-x-hidden">

@@ -10,7 +10,6 @@ import { getRandomColor } from "lib/helper";
 
 const LeftNavbar = () => {
   const [ color, setColor ] = useState("");
-  const [ storeId, setStoreId ] = useState("");
   const { employee, store, clearEmployee, clearStore } = useEmployeeStore();
   const router = useRouter();
   const currentPath = usePathname();
@@ -22,7 +21,7 @@ const LeftNavbar = () => {
     if(tab === "your_stores")
     router.push(`/your_stores`);
     else
-    router.push(`/store/${tab}/${storeId || "unknown"}`);
+    router.push(`/store/${tab}`);
   };
 
   const handleLogout = async () => {
@@ -41,7 +40,6 @@ const LeftNavbar = () => {
       toast({ title: "First select a store", description: "" });
       return router.replace("/your_stores");
     }
-    setStoreId(storeId)
   }, [router])
 
   return (

@@ -231,3 +231,30 @@ export const getAllProducts = async (storeId: string) => {
     }
   }
 }
+
+export const getProductWithProductDetails = async (name: string, storeId: string) => {
+  try {
+    const res = await axios.post("http://localhost:3001/store/get_product_details", {
+      storeId,
+      name
+    })
+
+    if(res.status !== 200) {
+      return {
+        success: false,
+        product: null
+      }
+    }
+
+    const data = await res.data as { success: boolean, product: Product | null }
+    return {
+      success: true,
+      product: data.product
+    }
+  } catch (_) {
+    return {
+      success: false,
+      product: null
+    }
+  }
+}

@@ -341,4 +341,36 @@ storeRouter.post("/get_all_products", async (req, res) => {
     }
 })
 
+storeRouter.post("/get_product_details", async (req, res) => {
+    const data = req.body;
+    const name = data.name;
+    const store_id = data.storeId;
+
+    try {
+        const product = await prisma.products.findFirst({
+            where: {
+                name,
+                store_id
+            }
+        })
+
+        if(!product) {
+            return res.status(404).json({
+                success: false,
+                product: null
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            product
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            product: null
+        })
+    }
+})
+
 export default storeRouter;
