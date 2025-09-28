@@ -1,3 +1,5 @@
+
+import { startOfDay, endOfDay } from "date-fns"
 import prisma from "store/client";
 import jwt from "jsonwebtoken";
 import { Router } from "express";
@@ -142,11 +144,19 @@ storeRouter.post("/todays_sales", async (req, res) => {
     const data = req.body;
     const storeId = data.storeId as string;
     try {
+        const todayStart = startOfDay(new Date());
+        const todayEnd = endOfDay(new Date());
         const totalTodaysSales = await prisma.product_sales.findMany({
             where: {
-                store_id: storeId
-            }
-        })
+              store_id: storeId,
+              sale: {
+                saleDate: {
+                  gte: todayStart,
+                  lte: todayEnd,
+                },
+              },
+            },
+        });
          
         let sales = 0;
         totalTodaysSales.forEach((s) => { sales = sales + s.totalPrice})
