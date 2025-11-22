@@ -18,6 +18,7 @@ const Page = () => {
     <div className="min-h-screen min-w-screen bg-[linear-gradient(to_bottom,_#2D8594_0%25,_#1F5A64_9%25,_#133137_22%25,_#0B1E21_47%25,_#0C2529_100%25)] p-14">
       <Navbar />
       <Hero handleClick={handleClick}/>
+      <div className="text-[14px] text-gray-300 text-center">&copy; 2025 Store Manager All rights reserved.</div>
     </div>
   );
 }
