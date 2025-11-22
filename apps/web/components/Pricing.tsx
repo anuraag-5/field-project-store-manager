@@ -235,7 +235,7 @@ const Pricing = () => {
           >
             <div className="flex justify-between">
               <div className="text-[13px] text-[#006ad4] bg-gray-300 px-4 rounded-[6px] flex justify-center items-center">
-                Basic
+                Enterprise
               </div>
               <div className="text-[11px] bg-[#1976D2] px-3 rounded-lg flex justify-center items-center">
                 Popular
