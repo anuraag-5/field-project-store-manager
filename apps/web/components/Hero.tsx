@@ -8,6 +8,7 @@ import Image from "next/image";
 import { neueFont } from "app/fonts/fonts";
 import { useRef } from "react";
 import BrandLogos from "./BrandLogos";
+import Pricing from "./Pricing";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Hero = ({ handleClick }: { handleClick: () => void}) => {
@@ -70,6 +71,7 @@ const Hero = ({ handleClick }: { handleClick: () => void}) => {
             </div>
         </div>
         <BrandLogos />
+        <Pricing />
     </div>
   )
 }
