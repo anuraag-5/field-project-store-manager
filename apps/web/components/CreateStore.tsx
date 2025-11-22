@@ -35,8 +35,11 @@ const CreateStore = () => {
 
   async function onSubmit(values: z.infer<typeof addStoreSchema>) {
     const token = localStorage.getItem("jwt");
-    if(!token) {
-      toast({ title: `You are not logged in`, description: "Please login first" });
+    if (!token) {
+      toast({
+        title: `You are not logged in`,
+        description: "Please login first",
+      });
       return router.replace("/user/signin");
     }
 
@@ -48,7 +51,16 @@ const CreateStore = () => {
     const state = values.state;
     const gstin = values.gstin;
 
-    const res = await addStore(name, email, contact, area, city, state, gstin, token);
+    const res = await addStore(
+      name,
+      email,
+      contact,
+      area,
+      city,
+      state,
+      gstin,
+      token
+    );
 
     if (res.success) {
       toast({ title: "✅ Store added", description: "" });
@@ -63,140 +75,153 @@ const CreateStore = () => {
   return (
     <section className="bg-[#4E5A5D] min-h-screen flex flex-col items-center gap-10 ">
       <div className="text-4xl text-white mt-9">Add Store</div>
-      <div className="w-[500px]">
+      <div className="w-full">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">Store Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="abc@xyz.com"
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="contact"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">Contact</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="area"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">Area</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Ex: shivajinagar"
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">City</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Ex: Pune"
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="state"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">State</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Ex: Maharashtra"
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="gstin"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
-                    <FormLabel className="shad-form-label">Gstin</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder=""
-                        {...field}
-                        className="shad-no-focus shad-input"
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage className="shad-form-message" />
-                </FormItem>
-              )}
-            />
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 w-full flex flex-col items-center"
+          >
+            <div className="flex w-full justify-center gap-8 mt-8">
+              <div className="w-[40%] flex flex-col gap-8">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">
+                          Store Email
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="contact"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">
+                          Contact
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="area"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">Area</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="w-[40%] flex flex-col gap-8">
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">City</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="state"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">State</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="gstin"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="bg-[#ffffff] shad-form-item w-full min-w-[200px] max-w-[700px]">
+                        <FormLabel className="shad-form-label">Gstin</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            {...field}
+                            className="shad-no-focus shad-input"
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage className="shad-form-message" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
             <div className="w-full max-w-[700px] flex justify-center mt-15">
               <Button
                 type="submit"
