@@ -95,7 +95,6 @@ const Pricing = () => {
       scrollTrigger: {
         trigger: golbalref.current,
         pin: true,
-        markers: true,
         start: "top 0%",
         end: "top -200%",
         scrub: 2,
@@ -183,24 +182,88 @@ const Pricing = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 flex-1 justify-evenly items-center pt-5">
-              <hr className="border-gray-200 w-full"/>
+              <hr className="border-gray-200 w-full" />
               <ul className="flex flex-col gap-4 text-[#002d5b] text-[14px] mt-5 w-full">
                 <li>Basic inventory tracking</li>
                 <li>Purchase & sales logging</li>
                 <li>Single store support</li>
                 <li>Email support</li>
               </ul>
-              <button className="bg-[#1976D2] py-2 px-8 max-w-[200px] rounded-4xl mt-5">Buy</button>
+              <button className="bg-[#1976D2] py-2 px-8 max-w-[200px] rounded-4xl mt-5">
+                Buy
+              </button>
             </div>
           </div>
           <div
-            className="absolute h-full w-full bg-[#B7CBCF] rounded-3xl"
+            className="absolute h-full w-full bg-[#B7CBCF] rounded-3xl border-[1px] border-white flex flex-col p-6 gap-5"
             ref={ref2}
-          ></div>
+          >
+            <div className="flex justify-between">
+              <div className="text-[13px] text-[#006ad4] bg-gray-300 px-4 rounded-[6px] flex justify-center items-center">
+                Business
+              </div>
+              <div className="text-[11px] bg-[#1976D2] px-3 rounded-lg flex justify-center items-center">
+                Popular
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center">
+                <div className="text-[30px] text-[#006ad4]">₹999</div>
+                <div className="text-gray-500">/mnth</div>
+              </div>
+              <div className="text-[12px] text-gray-600">
+                Per Employee, billed per month
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 flex-1 justify-evenly items-center pt-5">
+              <hr className="border-gray-200 w-full" />
+              <ul className="flex flex-col gap-4 text-[#002d5b] text-[14px] mt-5 w-full">
+              <li>Advanced inventory management</li>
+                <li>Low-stock alerts</li>
+                <li>Supplier management</li>
+                <li>Multi-user access</li>
+                <li>WhatsApp notifications</li>
+              </ul>
+              <button className="bg-[#1976D2] py-2 px-8 max-w-[200px] rounded-4xl mt-5">
+                Buy
+              </button>
+            </div>
+          </div>
           <div
-            className="absolute h-full w-full bg-[#B7CBCF] rounded-3xl"
+            className="absolute h-full w-full bg-[#B7CBCF] rounded-3xl border-[1px] border-white flex flex-col p-6 gap-5"
             ref={ref3}
-          ></div>
+          >
+            <div className="flex justify-between">
+              <div className="text-[13px] text-[#006ad4] bg-gray-300 px-4 rounded-[6px] flex justify-center items-center">
+                Basic
+              </div>
+              <div className="text-[11px] bg-[#1976D2] px-3 rounded-lg flex justify-center items-center">
+                Popular
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center">
+                <div className="text-[30px] text-[#006ad4]">₹1,999</div>
+                <div className="text-gray-500">/mnth</div>
+              </div>
+              <div className="text-[12px] text-gray-600">
+                Per Employee, billed per month
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 flex-1 justify-evenly items-center pt-5">
+              <hr className="border-gray-200 w-full" />
+              <ul className="flex flex-col gap-4 text-[#002d5b] text-[14px] mt-5 w-full">
+                <li>Multi-store analytics</li>
+                <li>Real-time dashboard</li>
+                <li>Staff roles & permissions</li>
+                <li>Priority support</li>
+                <li>Api Access</li>
+              </ul>
+              <button className="bg-[#1976D2] py-2 px-8 max-w-[200px] rounded-4xl mt-5">
+                Buy
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>
